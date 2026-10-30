@@ -11,5 +11,14 @@ router.get("/mostrarTodo", async (req, res, next) => {
   }
 });
 
+router.get("/mostrarUno/:id", async (req, res, next) => {
+  try {
+    const r = await proveedorController.mostrarUno(req.params.id);
+    res.status(r.status).json({ data: r.data, message: r.message });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export default router;
