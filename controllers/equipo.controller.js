@@ -85,6 +85,32 @@ class equiposController {
     ]);
     return { status: 201, data: filas[0], message: "Equipo creado con éxito" };
   }
+
+  async actualizarUno(idEt, nuevoEquipo) {
+    const [existe] = await pool.query("SELECT * FROM equipo WHERE id = ?", [
+      idEt,
+    ]);
+    if (existe.length === 0) {
+      return {
+        status: 404,
+        data: null,
+        message: "No se ha encontrado el equipo a actualizar",
+      };
+    }
+    const actual = existe[0];
+    const nombre = nuevoEquipo.nombre || actual.nombre;
+    const tipo = nuevoEquipo.tipo || actual.tipo;
+
+    await pool.query("UPDATE equipo SET nombre = ?, tipo = ? WHERE id = ?", [
+      nombre,
+      tipo,
+      idEt,
+    ]);
+    const [filas] = await pool.query("SELECT * FROM equipo WHERE id = ?", [
+      idEt,
+    ]);
+    return { status: 200, data: filas[0], message: "Equipo actualizado" };
+  }
 }
 
 export default new equiposController();
