@@ -20,5 +20,14 @@ router.get("/mostrarUno/:id", async (req, res, next) => {
   }
 });
 
+router.post("/crearUno", async (req, res, next) => {
+  try {
+    const r = await proveedorController.crearProveedor(req.body);
+    res.status(r.status).json({ data: r.data, message: r.message });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export default router;
