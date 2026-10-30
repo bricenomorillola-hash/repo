@@ -59,7 +59,6 @@ class equiposController {
       message: "Equipos del proveedor encontrados",
     };
   }
-
   async crearEquipo(idProv, nuevoEquipo) {
     const { nombre, tipo } = nuevoEquipo;
     if (!nombre || !tipo) {
@@ -85,7 +84,6 @@ class equiposController {
     ]);
     return { status: 201, data: filas[0], message: "Equipo creado con éxito" };
   }
-
   async actualizarUno(idEt, nuevoEquipo) {
     const [existe] = await pool.query("SELECT * FROM equipo WHERE id = ?", [
       idEt,
