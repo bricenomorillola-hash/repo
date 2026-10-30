@@ -29,5 +29,13 @@ router.post("/crearUno", async (req, res, next) => {
   }
 });
 
+router.put("/actualizarUno/:id", async (req, res, next) => {
+  try {
+    const r = await proveedorController.actualizarUno(req.params.id, req.body);
+    res.status(r.status).json({ data: r.data, message: r.message });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;

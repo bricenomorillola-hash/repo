@@ -29,6 +29,23 @@ class proveedorController {
     return { status: 201, data: filas[0], message: "Proveedor creado con éxito" };
   }
 
+  async actualizarUno(idProv, nuevoProveedor) {
+    const [existe] = await pool.query("SELECT * FROM proveedor WHERE id = ?", [idProv]);
+    if (existe.length === 0) {
+      return { status: 404, data: null, message: "No se ha encontrado el proveedor a actualizar" };
+    }
+    const actual = existe[0];
+    const nombre = nuevoProveedor.nombre || actual.nombre;
+    const fundacion = nuevoProveedor.fundacion || actual.fundacion;
+    const ubicacion = nuevoProveedor.ubicacion || actual.ubicacion;
+
+    await pool.query(
+      "UPDATE proveedor SET nombre = ?, fundacion = ?, ubicacion = ? WHERE id = ?",
+      [nombre, fundacion, ubicacion, idProv],
+    );
+    const [filas] = await pool.query("SELECT * FROM proveedor WHERE id = ?", [idProv]);
+    return { status: 200, data: filas[0], message: "Proveedor actualizado" };
+  }
 }
 
 export default new proveedorController();
