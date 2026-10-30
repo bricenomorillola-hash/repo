@@ -18,5 +18,13 @@ router.get("/mostrarUno/:id", async (req, res, next) => {
     next(error);
   }
 });
+router.get("/mostrarxProv/:id", async (req, res, next) => {
+  try {
+    const r = await equipoController.mostrarETProv(req.params.id);
+    res.status(r.status).json({ data: r.data, message: r.message });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
