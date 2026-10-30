@@ -1,8 +1,13 @@
 import pool from "../db/conexion.js";
 
-// Cada método devuelve { status, data, message }.
-// La ruta solo se encarga de enviar eso como JSON.
-// Los "?" en las consultas son parámetros: MySQL los rellena de forma segura
-// (así nadie puede colar código SQL malicioso, lo que se llama "SQL injection").
+class proveedorController {
+  async mostrarTodo() {
+    const [filas] = await pool.query("SELECT * FROM proveedor ORDER BY id");
+    if (filas.length === 0) {
+      return { status: 404, data: null, message: "No hay ningún proveedor encontrado" };
+    }
+    return { status: 200, data: filas, message: "Proveedores encontrados" };
+  }
+}
 
 export default new proveedorController();
