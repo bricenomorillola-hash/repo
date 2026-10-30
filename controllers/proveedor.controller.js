@@ -46,6 +46,19 @@ class proveedorController {
     const [filas] = await pool.query("SELECT * FROM proveedor WHERE id = ?", [idProv]);
     return { status: 200, data: filas[0], message: "Proveedor actualizado" };
   }
+    async eliminarUno(idProv) {
+    // Los equipos de este proveedor se borran solos por el ON DELETE CASCADE de schema.sql
+    const [resultado] = await pool.query("DELETE FROM proveedor WHERE id = ?", [idProv]);
+    if (resultado.affectedRows === 0) {
+      return { status: 404, data: null, message: "No se ha encontrado el proveedor a eliminar" };
+    }
+    return {
+      status: 200,
+      data: { idEliminado: Number(idProv) },
+      message: "Proveedor eliminado (y sus equipos)",
+    };
+  }
 }
+ 
 
 export default new proveedorController();
