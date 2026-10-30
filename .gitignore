@@ -1,0 +1,18 @@
+# Dependencias: se reinstalan con "npm install", no se suben
+node_modules/
+
+# Variables de entorno / contraseñas
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

@@ -1,0 +1,6 @@
+req.params.id
+req.body
+get tener
+post añadir
+put actualizar
+delete borrar

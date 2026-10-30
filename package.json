@@ -1,0 +1,17 @@
+{
+  "name": "examenproveedores",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.22.3",
+    "http-errors": "~1.6.3",
+    "morgan": "^1.12.1",
+    "mysql2": "^3.11.0"
+  }
+}
