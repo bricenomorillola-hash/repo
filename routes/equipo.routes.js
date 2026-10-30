@@ -47,4 +47,13 @@ router.put("/actualizarUno/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/eliminarUno/:id", async (req, res, next) => {
+  try {
+    const r = await equipoController.eliminarUno(req.params.id);
+    res.status(r.status).json({ data: r.data, message: r.message });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

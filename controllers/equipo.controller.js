@@ -109,6 +109,23 @@ class equiposController {
     ]);
     return { status: 200, data: filas[0], message: "Equipo actualizado" };
   }
+  async eliminarUno(idEt) {
+    const [resultado] = await pool.query("DELETE FROM equipo WHERE id = ?", [
+      idEt,
+    ]);
+    if (resultado.affectedRows === 0) {
+      return {
+        status: 404,
+        data: null,
+        message: "No se ha encontrado el equipo a eliminar",
+      };
+    }
+    return {
+      status: 200,
+      data: { idEliminado: Number(idEt) },
+      message: "Equipo eliminado",
+    };
+  }
 }
 
 export default new equiposController();
