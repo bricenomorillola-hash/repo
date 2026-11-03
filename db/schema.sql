@@ -11,8 +11,9 @@ CREATE DATABASE IF NOT EXISTS examen_proveedores
 
 USE examen_proveedores;
 
--- Si ya existían, se borran para empezar limpio (primero equipo, porque depende de proveedor)
+-- Si ya existían, se borran para empezar limpio (primero equipo, porque depende de proveedor y marca)
 DROP TABLE IF EXISTS equipo;
+DROP TABLE IF EXISTS marca;
 DROP TABLE IF EXISTS proveedor;
 
 CREATE TABLE proveedor (
@@ -22,14 +23,27 @@ CREATE TABLE proveedor (
   ubicacion  VARCHAR(150) NOT NULL
 ) ENGINE=InnoDB;
 
+CREATE TABLE marca (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  nombre     VARCHAR(150) NOT NULL,
+  fundacion  SMALLINT     NOT NULL,
+  pais       VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
+
 CREATE TABLE equipo (
   id           INT AUTO_INCREMENT PRIMARY KEY,
   proveedor_id INT          NOT NULL,
+  marca_id     INT          NOT NULL,
   nombre       VARCHAR(150) NOT NULL,
   tipo         VARCHAR(100) NOT NULL,
   -- Si se borra un proveedor, se borran sus equipos automáticamente
   CONSTRAINT fk_equipo_proveedor
     FOREIGN KEY (proveedor_id) REFERENCES proveedor(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  -- Si se borra una marca, se borran sus equipos automáticamente
+  CONSTRAINT fk_equipo_marca
+    FOREIGN KEY (marca_id) REFERENCES marca(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 ) ENGINE=InnoDB;
@@ -47,14 +61,26 @@ INSERT INTO proveedor (id, nombre, fundacion, ubicacion) VALUES
   (9,  'Tecnología y Redes del Caribe',    2015, 'San Juan, Puerto Rico'),
   (10, 'Automatización Industrial Total',  2008, 'Valencia, Venezuela');
 
-INSERT INTO equipo (id, proveedor_id, nombre, tipo) VALUES
-  (101, 1,  'Servidor Rack Pro X',            'Hardware'),
-  (102, 2,  'Torno CNC de Alta Precisión',    'Maquinaria'),
-  (103, 3,  'Ecógrafo Portátil 4D',           'Médico'),
-  (104, 5,  'Transpaleta Hidráulica 2T',      'Logística'),
-  (105, 7,  'Generador Diésel 50kW',          'Energía'),
-  (106, 1,  'Switch Administrable 24 Puertos','Redes'),
-  (107, 10, 'Compresor de Aire Industrial',   'Neumática'),
-  (108, 8,  'Estación Total Geodésica',       'Topografía'),
-  (109, 4,  'Impresora 3D Industrial FDM',    'Manufactura'),
-  (110, 7,  'Sistema de UPS Trifásico 10kVA', 'Energía');
+INSERT INTO marca (id, nombre, fundacion, pais) VALUES
+  (1,  'Dell Technologies',  1984, 'Estados Unidos'),
+  (2,  'Haas Automation',    1983, 'Estados Unidos'),
+  (3,  'GE Healthcare',      1994, 'Estados Unidos'),
+  (4,  'Jungheinrich',       1953, 'Alemania'),
+  (5,  'Caterpillar',        1925, 'Estados Unidos'),
+  (6,  'Cisco Systems',      1984, 'Estados Unidos'),
+  (7,  'Atlas Copco',        1873, 'Suecia'),
+  (8,  'Leica Geosystems',   1921, 'Suiza'),
+  (9,  'Stratasys',          1989, 'Estados Unidos'),
+  (10, 'Schneider Electric', 1836, 'Francia');
+
+INSERT INTO equipo (id, proveedor_id, marca_id, nombre, tipo) VALUES
+  (101, 1,  1,  'Servidor Rack Pro X',            'Hardware'),
+  (102, 2,  2,  'Torno CNC de Alta Precisión',    'Maquinaria'),
+  (103, 3,  3,  'Ecógrafo Portátil 4D',           'Médico'),
+  (104, 5,  4,  'Transpaleta Hidráulica 2T',      'Logística'),
+  (105, 7,  5,  'Generador Diésel 50kW',          'Energía'),
+  (106, 1,  6,  'Switch Administrable 24 Puertos','Redes'),
+  (107, 10, 7,  'Compresor de Aire Industrial',   'Neumática'),
+  (108, 8,  8,  'Estación Total Geodésica',       'Topografía'),
+  (109, 4,  9,  'Impresora 3D Industrial FDM',    'Manufactura'),
+  (110, 7,  10, 'Sistema de UPS Trifásico 10kVA', 'Energía');

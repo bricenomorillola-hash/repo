@@ -1,5 +1,5 @@
 ================================================================
- ACTIVIDAD 2.1: API DE PROVEEDORES Y EQUIPOS
+ ACTIVIDAD 2.1: API DE PROVEEDORES, EQUIPOS Y MARCAS
 ================================================================
 
 
@@ -98,7 +98,7 @@ PASO 3. Crear la base de datos (una sola vez)
 
   Resultado esperado: mensaje verde de importacion completada. En
   el panel izquierdo aparece "examen_proveedores" con las tablas
-  "equipo" y "proveedor".
+  "equipo", "marca" y "proveedor".
 
   Dato util: este paso puede repetirse en cualquier momento para
   dejar la base de datos como al inicio, ya que borra y vuelve a
@@ -178,14 +178,27 @@ EQUIPOS
   Ver uno        GET     http://localhost:3010/equipo/mostrarUno/101
   Ver los de un
   proveedor      GET     http://localhost:3010/equipo/mostrarxProv/1
+  Ver los de una
+  marca          GET     http://localhost:3010/equipo/mostrarxMarca/1
   Crear          POST    http://localhost:3010/equipo/crearUno/1
-  (el numero de  Body:   {"nombre":"Laptop","tipo":"Hardware"}
-  la URL es el
+  (el numero de  Body:   {"nombre":"Laptop","tipo":"Hardware",
+  la URL es el            "marca_id":1}
   id del
   proveedor)
   Editar         PUT     http://localhost:3010/equipo/actualizarUno/101
                  Body:   {"tipo":"Servidores"}
   Borrar         DELETE  http://localhost:3010/equipo/eliminarUno/101
+
+MARCAS
+
+  Listar todas   GET     http://localhost:3010/marca/mostrarTodo
+  Ver una        GET     http://localhost:3010/marca/mostrarUno/3
+  Crear          POST    http://localhost:3010/marca/crearUno
+                 Body:   {"nombre":"Mi Marca","fundacion":2020,
+                          "pais":"Venezuela"}
+  Editar         PUT     http://localhost:3010/marca/actualizarUno/3
+                 Body:   {"pais":"Colombia"}
+  Borrar         DELETE  http://localhost:3010/marca/eliminarUno/3
 
 Notas:
   - Los ids usados en las URL (3, 101, 1) son solo ejemplos. Si
