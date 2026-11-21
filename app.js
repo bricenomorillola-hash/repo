@@ -1,39 +1,31 @@
-import createError from "http-errors";
-import express from "express";
-import cookieParser from "cookie-parser";
-import logger from "morgan";
+const path = require("path");
+const express = require("express");
+const cookieParser = require("cookie-parser");
+require("./config/env");
 
-import proveedorrouter from "./routes/proveedor.routes.js";
-import equiporouter from "./routes/equipo.routes.js";
+const { cargarUsuario } = require("./middlewares/auth");
+const { noEncontrada, manejarError } = require("./middlewares/errores");
 
 const app = express();
 
-app.use(logger("dev"));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.json({ message: "API de proveedores y equipos funcionando" });
-});
+app.use(cargarUsuario);
 
-app.use("/equipo", equiporouter);
-app.use("/proveedor", proveedorrouter);
+app.use("/", require("./routes/vistas"));
+app.use("/auth", require("./routes/auth"));
+app.use("/proveedor", require("./routes/proveedor"));
+app.use("/marca", require("./routes/marca"));
+app.use("/equipo", require("./routes/equipo"));
+app.use("/usuario", require("./routes/usuario"));
 
-// Si ninguna ruta coincidió, se crea un error 404
-app.use((req, res, next) => {
-  next(createError(404, "Ruta no encontrada"));
-});
+app.use(noEncontrada);
+app.use(manejarError);
 
-// Manejador de errores: responde JSON (es una API, no hay páginas web que mostrar)
-app.use((err, req, res, next) => {
-  console.error(err.message);
-  const status = err.status || 500;
-  let message = err.message;
-  // Errores típicos de MySQL, con mensaje entendible
-  if (err.code === "ECONNREFUSED") message = "No hay conexión con MySQL. ¿Está encendido en XAMPP?";
-  if (err.code === "ER_BAD_DB_ERROR") message = "La base de datos no existe. Importa db/schema.sql";
-  res.status(status).json({ data: null, message });
-});
-
-export default app;
+module.exports = app;

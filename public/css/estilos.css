@@ -1,0 +1,24 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #f4f6f8; color: #222; }
+.barra { background: #1f3a5f; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; flex-wrap: wrap; gap: 8px; }
+.barra a { color: #fff; text-decoration: none; margin-left: 14px; }
+.barra .logo { font-weight: bold; margin-left: 0; font-size: 18px; }
+.chip { background: #2f5a8f; padding: 4px 10px; border-radius: 12px; margin-left: 14px; font-size: 13px; }
+.contenedor { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+h1 { color: #1f3a5f; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { padding: 10px; border-bottom: 1px solid #e0e4e8; text-align: left; }
+th { background: #e8eef5; }
+.formulario { background: #fff; padding: 16px; border-radius: 6px; max-width: 420px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.formulario.en-linea { max-width: none; flex-direction: row; flex-wrap: wrap; align-items: center; }
+.formulario label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+input, select { padding: 8px; border: 1px solid #bbb; border-radius: 4px; font-size: 14px; }
+button { background: #1f3a5f; color: #fff; border: 0; padding: 8px 14px; border-radius: 4px; cursor: pointer; }
+button.peligro { background: #b3261e; }
+.tarjetas { display: flex; gap: 16px; margin: 20px 0; }
+.tarjeta { background: #fff; padding: 20px 32px; border-radius: 6px; text-decoration: none; color: #1f3a5f; text-align: center; }
+.tarjeta strong { display: block; font-size: 32px; }
+.mensaje { padding: 10px; border-radius: 4px; margin-bottom: 12px; }
+.mensaje.ok { background: #d8f0dc; }
+.mensaje.error, .advertencia { background: #fde2e0; padding: 10px; border-radius: 4px; }
+.oculto { display: none; }

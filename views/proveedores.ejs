@@ -1,0 +1,32 @@
+<%- include('partials/header', { titulo: 'Proveedores' }) %>
+<h1>Proveedores</h1>
+
+<% if (usuario && usuario.rol === 'editor') { %>
+<form class="formulario en-linea" data-api="/proveedor/crearUno" data-metodo="POST" data-recargar="1">
+  <input type="text" name="nombre" placeholder="Nombre" required>
+  <input type="number" name="fundacion" placeholder="Año de fundación" required>
+  <input type="text" name="ubicacion" placeholder="Ubicación" required>
+  <button type="submit">Crear proveedor</button>
+</form>
+<% } %>
+
+<table>
+  <thead><tr><th>ID</th><th>Nombre</th><th>Fundación</th><th>Ubicación</th><% if (usuario && (usuario.rol === 'admin' || usuario.rol === 'editor')) { %><th>Acciones</th><% } %></tr></thead>
+  <tbody>
+    <% proveedores.forEach(p => { %>
+    <tr>
+      <td><%= p.id %></td><td><%= p.nombre %></td><td><%= p.fundacion %></td><td><%= p.ubicacion %></td>
+      <% if (usuario && (usuario.rol === 'admin' || usuario.rol === 'editor')) { %>
+      <td>
+        <button class="btn-editar" data-api="/proveedor/actualizarUno/<%= p.id %>"
+          data-campos='<%= JSON.stringify({ nombre: p.nombre, fundacion: p.fundacion, ubicacion: p.ubicacion }) %>'>Editar</button>
+        <% if (usuario.rol === 'admin') { %>
+        <button class="btn-borrar peligro" data-api="/proveedor/eliminarUno/<%= p.id %>" data-confirmar="Se borrarán también sus equipos. ¿Continuar?">Eliminar</button>
+        <% } %>
+      </td>
+      <% } %>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include('partials/footer') %>

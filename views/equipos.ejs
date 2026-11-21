@@ -1,0 +1,39 @@
+<%- include('partials/header', { titulo: 'Equipos' }) %>
+<h1>Equipos</h1>
+
+<% if (usuario.rol === 'editor') { %>
+<form class="formulario en-linea" id="form-equipo" data-api="/equipo/crearUno/" data-metodo="POST" data-recargar="1" data-sufijo="proveedor">
+  <input type="text" name="nombre" placeholder="Nombre del equipo" required>
+  <input type="text" name="tipo" placeholder="Tipo" required>
+  <select name="proveedor" required>
+    <option value="">Proveedor...</option>
+    <% proveedores.forEach(p => { %><option value="<%= p.id %>"><%= p.nombre %></option><% }) %>
+  </select>
+  <select name="marca_id" required data-numero="1">
+    <option value="">Marca...</option>
+    <% marcas.forEach(m => { %><option value="<%= m.id %>"><%= m.nombre %></option><% }) %>
+  </select>
+  <button type="submit">Crear equipo</button>
+</form>
+<% } %>
+
+<table>
+  <thead><tr><th>ID</th><th>Nombre</th><th>Tipo</th><th>Proveedor</th><th>Marca</th><% if (usuario.rol !== 'usuario') { %><th>Acciones</th><% } %></tr></thead>
+  <tbody>
+    <% equipos.forEach(e => { %>
+    <tr>
+      <td><%= e.id %></td><td><%= e.nombre %></td><td><%= e.tipo %></td><td><%= e.proveedor %></td><td><%= e.marca || '-' %></td>
+      <% if (usuario.rol !== 'usuario') { %>
+      <td>
+        <button class="btn-editar" data-api="/equipo/actualizarUno/<%= e.id %>"
+          data-campos='<%= JSON.stringify({ nombre: e.nombre, tipo: e.tipo }) %>'>Editar</button>
+        <% if (usuario.rol === 'admin') { %>
+        <button class="btn-borrar peligro" data-api="/equipo/eliminarUno/<%= e.id %>" data-confirmar="¿Eliminar este equipo?">Eliminar</button>
+        <% } %>
+      </td>
+      <% } %>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include('partials/footer') %>

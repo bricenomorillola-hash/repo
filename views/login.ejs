@@ -1,0 +1,10 @@
+<%- include('partials/header', { titulo: 'Iniciar sesión' }) %>
+<h1>Iniciar sesión</h1>
+<% if (aviso) { %><p class="advertencia">Debe iniciar sesión para ver esa página.</p><% } %>
+<form class="formulario" data-api="/auth/login" data-metodo="POST" data-ir="/">
+  <label>Correo <input type="email" name="email" required></label>
+  <label>Contraseña <input type="password" name="password" required></label>
+  <button type="submit">Entrar</button>
+</form>
+<p>¿No tiene cuenta? <a href="/registro">Registrese aqui</a>.</p>
+<%- include('partials/footer') %>

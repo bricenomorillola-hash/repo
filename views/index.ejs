@@ -1,0 +1,15 @@
+<%- include('partials/header', { titulo: 'Inicio' }) %>
+<h1>Sistema de Proveedores, Equipos y Marcas</h1>
+<p>Proyecto de Backend - UVM. Esta página es pública: cualquiera puede ver los proveedores y las marcas.</p>
+
+<div class="tarjetas">
+  <a class="tarjeta" href="/proveedores"><strong><%= totalProveedores %></strong><span>Proveedores</span></a>
+  <a class="tarjeta" href="/marcas"><strong><%= totalMarcas %></strong><span>Marcas</span></a>
+</div>
+
+<% if (!usuario) { %>
+  <p>Para ver los equipos debe <a href="/login">iniciar sesión</a>.</p>
+<% } else { %>
+  <p>Bienvenido, <strong><%= usuario.nombre %></strong>. Su rol es <strong><%= usuario.rol %></strong>.</p>
+<% } %>
+<%- include('partials/footer') %>

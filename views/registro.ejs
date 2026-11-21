@@ -1,0 +1,10 @@
+<%- include('partials/header', { titulo: 'Registro' }) %>
+<h1>Crear cuenta</h1>
+<form class="formulario" data-api="/auth/registro" data-metodo="POST" data-ir="/login">
+  <label>Nombre <input type="text" name="nombre" required></label>
+  <label>Correo <input type="email" name="email" required></label>
+  <label>Contraseña (mínimo 6 caracteres) <input type="password" name="password" minlength="6" required></label>
+  <button type="submit">Registrarme</button>
+</form>
+<p>Todo usuario nuevo entra con el rol "usuario". Un administrador puede cambiarlo.</p>
+<%- include('partials/footer') %>

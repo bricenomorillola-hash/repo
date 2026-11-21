@@ -1,0 +1,29 @@
+<%- include('partials/header', { titulo: 'Usuarios' }) %>
+<h1>Usuarios (solo admin)</h1>
+<table>
+  <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Acciones</th></tr></thead>
+  <tbody>
+    <% usuarios.forEach(u => { %>
+    <tr>
+      <td><%= u.id %></td><td><%= u.nombre %></td><td><%= u.email %></td>
+      <td>
+        <% if (u.id === usuario.id) { %>
+          <%= u.rol %> (usted)
+        <% } else { %>
+        <select class="cambiar-rol" data-api="/usuario/cambiarRol/<%= u.id %>">
+          <% ['admin','editor','usuario'].forEach(r => { %>
+            <option value="<%= r %>" <%= u.rol === r ? 'selected' : '' %>><%= r %></option>
+          <% }) %>
+        </select>
+        <% } %>
+      </td>
+      <td>
+        <% if (u.id !== usuario.id) { %>
+        <button class="btn-borrar peligro" data-api="/usuario/eliminarUno/<%= u.id %>" data-confirmar="¿Eliminar este usuario?">Eliminar</button>
+        <% } %>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include('partials/footer') %>

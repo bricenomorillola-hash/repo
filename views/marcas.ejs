@@ -1,0 +1,32 @@
+<%- include('partials/header', { titulo: 'Marcas' }) %>
+<h1>Marcas</h1>
+
+<% if (usuario && usuario.rol === 'editor') { %>
+<form class="formulario en-linea" data-api="/marca/crearUno" data-metodo="POST" data-recargar="1">
+  <input type="text" name="nombre" placeholder="Nombre" required>
+  <input type="number" name="fundacion" placeholder="Año de fundación" required>
+  <input type="text" name="pais" placeholder="País" required>
+  <button type="submit">Crear marca</button>
+</form>
+<% } %>
+
+<table>
+  <thead><tr><th>ID</th><th>Nombre</th><th>Fundación</th><th>País</th><% if (usuario && (usuario.rol === 'admin' || usuario.rol === 'editor')) { %><th>Acciones</th><% } %></tr></thead>
+  <tbody>
+    <% marcas.forEach(m => { %>
+    <tr>
+      <td><%= m.id %></td><td><%= m.nombre %></td><td><%= m.fundacion %></td><td><%= m.pais %></td>
+      <% if (usuario && (usuario.rol === 'admin' || usuario.rol === 'editor')) { %>
+      <td>
+        <button class="btn-editar" data-api="/marca/actualizarUno/<%= m.id %>"
+          data-campos='<%= JSON.stringify({ nombre: m.nombre, fundacion: m.fundacion, pais: m.pais }) %>'>Editar</button>
+        <% if (usuario.rol === 'admin') { %>
+        <button class="btn-borrar peligro" data-api="/marca/eliminarUno/<%= m.id %>" data-confirmar="¿Eliminar esta marca?">Eliminar</button>
+        <% } %>
+      </td>
+      <% } %>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include('partials/footer') %>

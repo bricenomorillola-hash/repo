@@ -1,17 +1,22 @@
 {
-  "name": "examenproveedores",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
+  "name": "actividad-2-2-jwt-roles",
+  "version": "2.0.0",
+  "description": "API de Proveedores, Equipos y Marcas con JWT, roles y vistas EJS",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "migrate": "node db/migrate.js",
+    "seed": "node db/seed.js",
+    "setup": "node db/migrate.js && node db/seed.js"
   },
+  "license": "ISC",
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "^4.22.3",
-    "http-errors": "~1.6.3",
-    "morgan": "^1.12.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.0"
   }
 }

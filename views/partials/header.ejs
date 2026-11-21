@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= typeof titulo !== 'undefined' ? titulo + ' - ' : '' %>Proveedores y Equipos</title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <nav class="barra">
+    <a class="logo" href="/">Proveedores y Equipos</a>
+    <div class="enlaces">
+      <a href="/proveedores">Proveedores</a>
+      <a href="/marcas">Marcas</a>
+      <% if (usuario) { %>
+        <a href="/equipos">Equipos</a>
+        <% if (usuario.rol === 'admin') { %><a href="/usuarios">Usuarios</a><% } %>
+        <span class="chip"><%= usuario.nombre %> (<%= usuario.rol %>)</span>
+        <a href="/auth/logout">Salir</a>
+      <% } else { %>
+        <a href="/login">Iniciar sesión</a>
+        <a href="/registro">Registrarse</a>
+      <% } %>
+    </div>
+  </nav>
+  <main class="contenedor">
+    <div id="mensaje" class="mensaje oculto"></div>
